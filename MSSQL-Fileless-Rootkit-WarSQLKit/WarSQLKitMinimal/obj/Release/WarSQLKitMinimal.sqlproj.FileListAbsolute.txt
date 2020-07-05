@@ -1,0 +1,9 @@
+C:\Users\Evi1oX\Desktop\MSSQL-Fileless-Rootkit-WarSQLKit\WarSQLKitMinimal\bin\Release\WarSQLKitMinimal.dacpac
+C:\Users\Evi1oX\Desktop\MSSQL-Fileless-Rootkit-WarSQLKit\WarSQLKitMinimal\bin\Release\WarSQLKitMinimal.dll
+C:\Users\Evi1oX\Desktop\MSSQL-Fileless-Rootkit-WarSQLKit\WarSQLKitMinimal\bin\Release\WarSQLKitMinimal.pdb
+C:\Users\Evi1oX\Desktop\MSSQL-Fileless-Rootkit-WarSQLKit\WarSQLKitMinimal\obj\Release\WarSQLKitMinimal.dll
+C:\Users\Evi1oX\Desktop\MSSQL-Fileless-Rootkit-WarSQLKit\WarSQLKitMinimal\obj\Release\WarSQLKitMinimal.pdb
+C:\Users\Evi1oX\Desktop\MSSQL-Fileless-Rootkit-WarSQLKit\WarSQLKitMinimal\obj\Release\Model.xml
+C:\Users\Evi1oX\Desktop\MSSQL-Fileless-Rootkit-WarSQLKit\WarSQLKitMinimal\obj\Release\refactor.xml
+C:\Users\Evi1oX\Desktop\MSSQL-Fileless-Rootkit-WarSQLKit\WarSQLKitMinimal\obj\Release\postdeploy.sql
+C:\Users\Evi1oX\Desktop\MSSQL-Fileless-Rootkit-WarSQLKit\WarSQLKitMinimal\obj\Release\predeploy.sql
