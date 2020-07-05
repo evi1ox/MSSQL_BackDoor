@@ -1,15 +1,17 @@
- 目的主要是摆脱MSSMS和 Navicat 调用 sql 语句,  顺便学习 golang-mssql 编程
+## MSSQL_BackDoor 
+
+目的主要是摆脱MSSMS和 Navicat 调用执行 sp_cmdExec
 
 
 
-在原有项目(https://github.com/EPICROUTERSS/MSSQL-Fileless-Rootkit-WarSQLKit)做了更新
+在原有项目( [https://github.com/EPICROUTERSS/MSSQL-Fileless-Rootkit-WarSQLKit](https://github.com/EPICROUTERSS/MSSQL-Fileless-Rootkit-WarSQLKit) )做了更新
 
 - 使用脚本查询可以获取返回值, 之前只能获取消息, 所以很依赖工具执行 sp_cmdExec
 - 更新 mimikatz_powershell 至2020版本
 
 
 
-基于狼师傅的工具(http://wolvez.club/2019/09/19/mssql-command-tool/)稍微改了下程序
+基于狼师傅的工具([http://wolvez.club/2019/09/19/mssql-command-tool/](http://wolvez.club/2019/09/19/mssql-command-tool/))稍微改了下程序
 
 1. OpenCLR
 
