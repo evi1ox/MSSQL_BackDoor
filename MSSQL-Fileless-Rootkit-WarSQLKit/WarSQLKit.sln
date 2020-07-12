@@ -5,8 +5,6 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "WarSQLKit", "WarSQLKit\WarSQLKit.sqlproj", "{C6001C77-007A-4851-9371-61828D235C4E}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "WarSQLKitMinimal", "WarSQLKitMinimal\WarSQLKitMinimal.sqlproj", "{B4E1BEE9-3454-4D2F-A6D7-E47FD5B602B8}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

