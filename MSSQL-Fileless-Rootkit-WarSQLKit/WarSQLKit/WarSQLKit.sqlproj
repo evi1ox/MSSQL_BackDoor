@@ -96,6 +96,5 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MeterpreterBuilder.cs" />
     <Compile Include="FileDownloader.cs" />
-    <Compile Include="shellcodeloader.cs" />
   </ItemGroup>
 </Project>
